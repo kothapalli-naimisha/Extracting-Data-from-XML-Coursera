@@ -1,0 +1,16 @@
+import urllib.request                                                        # importing required modules
+import urllib.parse
+import urllib.error
+import xml.etree.ElementTree as et
+url = input('Enter location: ')                                              # Asking input from user
+print('Retrieving', url)                                                                   
+read = urllib.request.urlopen(url).read()                                    # using urllib opening the document and reading it 
+print('Retrieved', len(read), 'characters')                                  # checking the length
+
+tree = et.fromstring(read)                                                   # fromstring() parses XML from a string directly into an Element                
+lst = tree.findall('comments/comment')
+print('Count:', len(lst))                                                    # checking the length
+ssum = 0                                                                     # initializing sum to 0
+for item in lst:                                                             # looping through the lst
+     ssum += int(item.find('count').text)                                    # adding the count tag text to sum and repeating the loop          
+print('Sum:', ssum)                                                          # finally seeing the sum value
